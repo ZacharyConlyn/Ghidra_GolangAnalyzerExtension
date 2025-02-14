@@ -164,6 +164,28 @@ public class GolangFunction {
 	public String get_func_name() {
 		return func_name;
 	}
+	
+	public String get_func_package() {
+		// first remove the (*funcname) stuff
+		String pack_name = func_name;
+		int lastParensStarIndex = pack_name.lastIndexOf("(*");
+		if (lastParensStarIndex != -1) {
+			pack_name = pack_name.substring(0, lastParensStarIndex);
+		}
+
+		// this algo is taken from GoReSym symtab.go's PackageName() function
+		int pathEnd = pack_name.lastIndexOf("/");
+		if (pathEnd < 0) {
+			pathEnd = 0;
+		}
+
+		int lastDotIndex = pack_name.substring(pathEnd).lastIndexOf(".");
+		if (lastDotIndex != -1) {
+			pack_name = pack_name.substring(0, pathEnd + lastDotIndex);
+		}
+
+		return pack_name;
+	}
 
 	public int get_arg_size() {
 		return arg_size;

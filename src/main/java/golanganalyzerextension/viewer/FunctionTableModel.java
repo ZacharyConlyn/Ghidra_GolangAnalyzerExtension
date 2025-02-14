@@ -81,6 +81,7 @@ class FunctionTableModel extends AddressBasedTableModel<GolangFunctionRecord> {
 		// descriptor.addVisibleColumn(DiscoverableTableUtils.adaptColumForModel(this, new AddressTableColumn()), 0, true);
 		descriptor.addVisibleColumn(new FunctionAddressTableColumn());
 		descriptor.addVisibleColumn(new FunctionNameTableColumn());
+		descriptor.addVisibleColumn(new FunctionPackageTableColumn());
 		descriptor.addVisibleColumn(new FunctionArgsSizeTableColumn());
 		descriptor.addVisibleColumn(new FunctionSizeTableColumn());
 
@@ -121,6 +122,25 @@ class FunctionTableModel extends AddressBasedTableModel<GolangFunctionRecord> {
 		public String getValue(GolangFunctionRecord rowObject, Settings settings, Program program,
 				ServiceProvider services) throws IllegalArgumentException {
 			return rowObject.get_func_name();
+		}
+
+		@Override
+		public int getColumnPreferredWidth() {
+			return 100;
+		}
+	}
+
+	private static class FunctionPackageTableColumn
+			extends AbstractProgramBasedDynamicTableColumn<GolangFunctionRecord, String> {
+		@Override
+		public String getColumnName() {
+			return "Function Package";
+		}
+
+		@Override
+		public String getValue(GolangFunctionRecord rowObject, Settings settings, Program program,
+				ServiceProvider services) throws IllegalArgumentException {
+			return rowObject.get_func_package();
 		}
 
 		@Override
